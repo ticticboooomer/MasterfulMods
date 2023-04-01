@@ -15,6 +15,15 @@
           "height": 100,
           "image": "temui:textures/gui/myimg.png"
         }
+      },
+      {
+        "type": "mui:element/text",
+        "id": "test:test/text1",
+        "spec": {
+          "x": 30,
+          "y": 30,
+          "text": "Hello, Pineapple Juice"
+        }
       }
     ]
   }
