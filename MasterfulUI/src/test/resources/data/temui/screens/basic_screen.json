@@ -1,0 +1,19 @@
+{
+  "type": "mui:screen",
+  "id": "test:test",
+  "spec": {
+    "elements": [
+      {
+        "type": "mui:element/image",
+        "id": "test:test/image1",
+        "spec": {
+          "x": 100,
+          "y": 100,
+          "width": 100,
+          "height": 100,
+          "image": "temui:textures/gui/myimg.png"
+        }
+      }
+    ]
+  }
+}

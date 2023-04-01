@@ -26,7 +26,6 @@ public class JsonDocumentSpec implements IParseableDocumentSpec {
     public Integer getInteger() {
         return json.getAsInt();
     }
-
     @Override
     public Boolean getBoolean() {
         return json.getAsBoolean();
@@ -45,6 +44,11 @@ public class JsonDocumentSpec implements IParseableDocumentSpec {
     @Override
     public Long getLong() {
         return json.getAsLong();
+    }
+
+    @Override
+    public boolean has(String key) {
+        return json.getAsJsonObject().has(key);
     }
 
     @Override

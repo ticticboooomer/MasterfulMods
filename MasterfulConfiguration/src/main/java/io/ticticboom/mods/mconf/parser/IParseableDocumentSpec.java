@@ -11,7 +11,7 @@ public interface IParseableDocumentSpec {
     Float getFloat();
     Double getDouble();
     Long getLong();
-
+    boolean has(String key);
     IParseableDocumentSpec get(String key);
     List<IParseableDocumentSpec> getArray();
     ResourceLocation getSubDocument();
