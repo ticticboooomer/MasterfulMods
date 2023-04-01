@@ -31,14 +31,9 @@ public class ImageElement extends ConfigDocumentType {
             var width = doc.get("width").getInteger();
             var height = doc.get("height").getInteger();
             var image = new ResourceLocation(doc.get("image").getString());
-            int ix = 0, iy = 0, iw = width, ih = height;
-            if (doc.has("imageX")) {
-                ix = doc.get("imageX").getInteger();
-                iy = doc.get("imageY").getInteger();
-                iw = doc.get("imageWidth").getInteger();
-                ih = doc.get("imageHeight").getInteger();
-            }
-            return new Spec(x, y, width, height, image, ix, iy, iw, ih);
+            var ix = doc.get("ix").getInteger();
+            var iy = doc.get("iy").getInteger();
+            return new Spec(x, y, width, height, image, ix, iy);
         }
 
         @Override
@@ -65,7 +60,7 @@ public class ImageElement extends ConfigDocumentType {
             RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.setShaderTexture(0, spec.image);
-            GuiComponent.blit(pose, 0,0, spec.x, spec.y, spec.w, spec.h);
+            GuiComponent.blit(pose, spec.x, spec.y, spec.ix, spec.iy, spec.w, spec.h);
         }
     }
 
@@ -75,9 +70,7 @@ public class ImageElement extends ConfigDocumentType {
                        int h,
                        ResourceLocation image,
                        int ix,
-                       int iy,
-                       int iw,
-                       int ih) implements ScreenElements.IElementSpec {
+                       int iy) implements ScreenElements.IElementSpec {
 
     }
 

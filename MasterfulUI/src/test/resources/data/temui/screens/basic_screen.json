@@ -7,8 +7,10 @@
         "type": "mui:element/image",
         "id": "test:test/image1",
         "spec": {
-          "x": 100,
-          "y": 100,
+          "x": 20,
+          "y": 20,
+          "ix": 0,
+          "iy": 0,
           "width": 100,
           "height": 100,
           "image": "temui:textures/gui/myimg.png"
