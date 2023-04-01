@@ -1,0 +1,18 @@
+plugins {
+    id 'java'
+}
+
+group = 'io.ticticboom.mods'
+version = '1.0-SNAPSHOT'
+
+repositories {
+}
+
+dependencies {
+
+}
+
+test {
+}
+
+build.dependsOn('publishToMavenLocal')
