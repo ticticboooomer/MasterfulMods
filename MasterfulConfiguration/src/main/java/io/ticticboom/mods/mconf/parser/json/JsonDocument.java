@@ -1,5 +1,7 @@
 package io.ticticboom.mods.mconf.parser.json;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import io.ticticboom.mods.mconf.document.IConfigSpecConsumer;
 import io.ticticboom.mods.mconf.parser.BaseParseableDocument;
@@ -7,6 +9,9 @@ import io.ticticboom.mods.mconf.parser.IParseableDocument;
 import io.ticticboom.mods.mconf.parser.IParseableDocumentSpec;
 import io.ticticboom.mods.mconf.setup.MConfRegistries;
 import net.minecraft.resources.ResourceLocation;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class JsonDocument extends BaseParseableDocument {
 
@@ -17,7 +22,6 @@ public class JsonDocument extends BaseParseableDocument {
         this.json = json;
         MConfRegistries.DOCUMENTS.put(this.getId(), this);
         spec = new JsonDocumentSpec(json.get("spec").getAsJsonObject(), this);
-
     }
     @Override
     public ResourceLocation getType() {
@@ -29,6 +33,8 @@ public class JsonDocument extends BaseParseableDocument {
         return new ResourceLocation(json.get("id").getAsString());
     }
 
+
+
     @Override
     public IParseableDocumentSpec getSpec() {
         return spec;
@@ -37,5 +43,18 @@ public class JsonDocument extends BaseParseableDocument {
     @Override
     public void runConsumers() {
         consumeSpec(spec);
+    }
+
+    @Override
+    public List<IParseableDocument> getAttachments() {
+        if (!json.has("attachments")) {
+            return new ArrayList<>();
+        }
+        var result  = new ArrayList<IParseableDocument>();
+        JsonArray array = json.get("attachments").getAsJsonArray();
+        for (JsonElement elem : array) {
+            result.add(new JsonDocument(elem.getAsJsonObject()));
+        }
+        return result;
     }
 }

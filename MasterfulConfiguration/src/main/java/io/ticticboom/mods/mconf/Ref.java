@@ -14,4 +14,9 @@ public class Ref {
     public static final class Parser {
         public static final ResourceLocation JSON = rl("json");
     }
+
+    public static final class DocTypes {
+        public static final ResourceLocation TEXT_COMPONENT = rl("component/text");
+        public static final ResourceLocation TRANSLATED_COMPONENT = rl("component/translated");
+    }
 }

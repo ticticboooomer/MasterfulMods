@@ -9,6 +9,6 @@ import org.slf4j.LoggerFactory;
 public class ModRoot {
     public static final Logger LOG = LoggerFactory.getLogger("Masterful Configuration");
     public ModRoot() {
-        MConfRegistries.registerParsers();
+        MConfRegistries.registerDefaults();
     }
 }

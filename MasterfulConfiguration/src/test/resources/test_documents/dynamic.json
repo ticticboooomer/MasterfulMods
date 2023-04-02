@@ -1,0 +1,19 @@
+{
+  "type" : "mconf:evaluated/scope",
+  "id": "mm:my_scope_a",
+  "spec": {
+    "type": "mmb:multiblock/fixed",
+    "id": "mm:my_multiblock_a",
+    "spec": {
+      "pattern": {
+        "type": "mmb:structure/pattern",
+        "id": "mmb:stub"
+      },
+      "key": {
+        "type": "mmb:structure/key",
+        "id": "mmb:stub"
+      },
+      "displayName": "My displayname"
+    }
+  }
+}

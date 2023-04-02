@@ -22,7 +22,13 @@
         "spec": {
           "x": 30,
           "y": 30,
-          "text": "Hello, Pineapple Juice"
+          "text": {
+            "type": "mconf:component/text",
+            "id": "test:test/text1/literal",
+            "spec": {
+              "text": "Hello World"
+            }
+          }
         }
       }
     ]

@@ -153,7 +153,7 @@ dependencies {
 jar {
     manifest {
         attributes([
-                "Specification-Title": "masterful",
+                "Specification-Title": "Masterful Machinery",
                             //"Specification-Vendor": "masterful authors",
                             "Specification-Version": "1", // We are version 1 of ourselves
                 "Implementation-Title": project.name,
@@ -164,7 +164,7 @@ jar {
     }
 }
 
-jar.finalizedBy('reobfJar')
+publish.dependsOn('reobfJar')
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
@@ -172,12 +172,8 @@ tasks.withType(JavaCompile).configureEach {
 
 publishing {
     publications {
-        maven(MavenPublication) {
-            groupId = group
-            artifactId = archivesBaseName
-            version = version
-
-            from components.java
+        mavenJava(MavenPublication) {
+            artifact jar
         }
     }
 }

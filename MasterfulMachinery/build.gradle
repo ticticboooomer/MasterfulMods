@@ -1,6 +1,5 @@
 plugins {
     id 'net.minecraftforge.gradle' version '5.1.+'
-    id 'maven-publish'
 }
 
 
@@ -8,7 +7,7 @@ group = 'io.ticticboom.mods'
 version = '0.0.1'
 
 java {
-    archivesBaseName = 'MasterfulUI'
+    archivesBaseName = 'MasterfulMachinery'
     toolchain.languageVersion = JavaLanguageVersion.of(17)
 }
 
@@ -50,14 +49,11 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-            property 'forge.enabledGameTestNamespaces', 'MasterfulUI'
+            property 'forge.enabledGameTestNamespaces', 'MasterfulMachinery'
 
             mods {
-                mui {
+                mm {
                     source sourceSets.main
-                }
-                temui {
-                    source sourceSets.test
                 }
             }
         }
@@ -69,14 +65,11 @@ minecraft {
 
             property 'forge.logging.console.level', 'debug'
 
-            property 'forge.enabledGameTestNamespaces', 'MasterfulUI'
+            property 'forge.enabledGameTestNamespaces', 'MasterfulMachinery'
 
             mods {
-                mui {
+                mm {
                     source sourceSets.main
-                }
-                temui {
-                    source sourceSets.test
                 }
             }
         }
@@ -91,14 +84,11 @@ minecraft {
 
             property 'forge.logging.console.level', 'debug'
 
-            property 'forge.enabledGameTestNamespaces', 'MasterfulUI'
+            property 'forge.enabledGameTestNamespaces', 'MasterfulMachinery'
 
             mods {
-                mui {
+                mm {
                     source sourceSets.main
-                }
-                temui {
-                    source sourceSets.test
                 }
             }
         }
@@ -111,14 +101,11 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', 'mui', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', 'mm', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
-                mui {
+                mm {
                     source sourceSets.main
-                }
-                temui {
-                    source sourceSets.test
                 }
             }
         }
@@ -133,6 +120,9 @@ repositories {
     // ForgeGradle automatically adds the Forge maven and Maven Central for you
 
     // If you have mod jar dependencies in ./libs, you can declare them as a repository like so:
+    // flatDir {
+    //     dir 'libs'
+    // }
     mavenLocal()
 }
 
@@ -141,7 +131,9 @@ dependencies {
     // that the dep is a ForgeGradle 'patcher' dependency, and its patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.19.4-45.0.40'
+    implementation "io.ticticboom.mods:MasterfulUI:0.0.1"
     implementation "io.ticticboom.mods:MasterfulConfiguration:0.0.1"
+    implementation "io.ticticboom.mods:MasterfulMultiBlocks:0.0.1"
     // Real mod deobf dependency examples - these get remapped to your current mappings
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api") // Adds JEI API as a compile dependency
     // runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}") // Adds the full JEI mod as a runtime dependency
@@ -159,30 +151,19 @@ dependencies {
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "mui",
-                //"Specification-Vendor": "mui authors",
+                "Specification-Title"     : "Masterful Machinery",
+                //"Specification-Vendor": "mm authors",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
-                //"Implementation-Vendor": "mui authors",
+                //"Implementation-Vendor": "mm authors",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
 }
 
-publish.dependsOn('reobfJar')
+jar.finalizedBy('reobfJar')
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
-}
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId = group
-            artifactId = archivesBaseName
-            version = version
-
-            from components.java
-        }
-    }
 }
