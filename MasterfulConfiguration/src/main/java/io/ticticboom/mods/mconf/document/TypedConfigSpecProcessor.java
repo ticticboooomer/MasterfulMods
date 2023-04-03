@@ -5,7 +5,7 @@ import io.ticticboom.mods.mconf.parser.IParseableDocumentSpec;
 
 import java.util.List;
 
-public abstract class TypedConfigSpecConsumer<T> implements IConfigSpecConsumer {
+public abstract class TypedConfigSpecProcessor<T> implements IConfigSpecProcessor {
     @Override
     public Object parse(IParseableDocumentSpec spec) {
         return safeParse(spec);

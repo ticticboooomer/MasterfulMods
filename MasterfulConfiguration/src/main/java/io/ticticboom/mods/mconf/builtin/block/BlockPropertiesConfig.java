@@ -1,8 +1,8 @@
 package io.ticticboom.mods.mconf.builtin.block;
 
 import io.ticticboom.mods.mconf.document.DocumentValidationError;
-import io.ticticboom.mods.mconf.document.IConfigSpecConsumer;
-import io.ticticboom.mods.mconf.document.ThrowingConfigSpecConsumer;
+import io.ticticboom.mods.mconf.document.IConfigSpecProcessor;
+import io.ticticboom.mods.mconf.document.ThrowingConfigSpecProcessor;
 import io.ticticboom.mods.mconf.parser.IParseableDocument;
 import io.ticticboom.mods.mconf.parser.IParseableDocumentSpec;
 import io.ticticboom.mods.mconf.registry.MasterfulRegistry;
@@ -16,11 +16,11 @@ import java.util.List;
 public class BlockPropertiesConfig extends ConfigDocumentType {
     public static final MasterfulRegistry<Spec> REGISTRY = MasterfulRegistry.create();
     @Override
-    public IConfigSpecConsumer createSpecConsumer() {
-        return new SpecConsumer();
+    public IConfigSpecProcessor createSpecConsumer() {
+        return new SpecProcessor();
     }
 
-    public static final class SpecConsumer extends ThrowingConfigSpecConsumer<Spec> {
+    public static final class SpecProcessor extends ThrowingConfigSpecProcessor<Spec> {
 
         @Override
         public Spec safeParse(IParseableDocumentSpec value) {

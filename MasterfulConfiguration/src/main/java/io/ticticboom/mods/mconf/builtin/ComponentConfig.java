@@ -1,7 +1,7 @@
 package io.ticticboom.mods.mconf.builtin;
 
 import io.ticticboom.mods.mconf.document.DocumentValidationError;
-import io.ticticboom.mods.mconf.document.ThrowingConfigSpecConsumer;
+import io.ticticboom.mods.mconf.document.ThrowingConfigSpecProcessor;
 import io.ticticboom.mods.mconf.parser.IParseableDocument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -13,7 +13,7 @@ import java.util.Map;
 public class ComponentConfig {
     public static final Map<ResourceLocation, IComponentSpec> REGISTRY = new HashMap<>();
     public static final Map<ResourceLocation, Component> COMPONENTS = new HashMap<>();
-    public static abstract class SpecConsumer<T extends IComponentSpec> extends ThrowingConfigSpecConsumer<T> {
+    public static abstract class SpecProcessor<T extends IComponentSpec> extends ThrowingConfigSpecProcessor<T> {
 
         protected abstract Component getComponent(T spec);
         @Override

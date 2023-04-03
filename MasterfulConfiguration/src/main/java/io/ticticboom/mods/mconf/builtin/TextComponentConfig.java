@@ -1,17 +1,17 @@
 package io.ticticboom.mods.mconf.builtin;
 
-import io.ticticboom.mods.mconf.document.IConfigSpecConsumer;
+import io.ticticboom.mods.mconf.document.IConfigSpecProcessor;
 import io.ticticboom.mods.mconf.parser.IParseableDocumentSpec;
 import io.ticticboom.mods.mconf.setup.document.ConfigDocumentType;
 import net.minecraft.network.chat.Component;
 
 public class TextComponentConfig extends ConfigDocumentType {
     @Override
-    public IConfigSpecConsumer createSpecConsumer() {
-        return new SpecConsumer();
+    public IConfigSpecProcessor createSpecConsumer() {
+        return new SpecProcessor();
     }
 
-    public static final class SpecConsumer extends ComponentConfig.SpecConsumer<Spec> {
+    public static final class SpecProcessor extends ComponentConfig.SpecProcessor<Spec> {
 
         @Override
         protected Component getComponent(Spec spec) {

@@ -5,9 +5,9 @@ import io.ticticboom.mods.mconf.parser.IParseableDocumentSpec;
 
 import java.util.List;
 
-public interface IConfigSpecConsumer {
+public interface IConfigSpecProcessor {
     Object parse(IParseableDocumentSpec spec);
+    void consume(Object value, IParseableDocument doc);
     boolean validate(Object value, List<DocumentValidationError> errors);
     void handleValidationErrors(Object value, List<DocumentValidationError> errors);
-    void consume(Object value, IParseableDocument doc);
 }
