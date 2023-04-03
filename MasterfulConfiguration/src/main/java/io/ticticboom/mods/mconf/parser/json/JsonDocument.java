@@ -3,7 +3,6 @@ package io.ticticboom.mods.mconf.parser.json;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import io.ticticboom.mods.mconf.document.IConfigSpecConsumer;
 import io.ticticboom.mods.mconf.parser.BaseParseableDocument;
 import io.ticticboom.mods.mconf.parser.IParseableDocument;
 import io.ticticboom.mods.mconf.parser.IParseableDocumentSpec;
@@ -43,18 +42,5 @@ public class JsonDocument extends BaseParseableDocument {
     @Override
     public void runConsumers() {
         consumeSpec(spec);
-    }
-
-    @Override
-    public List<IParseableDocument> getAttachments() {
-        if (!json.has("attachments")) {
-            return new ArrayList<>();
-        }
-        var result  = new ArrayList<IParseableDocument>();
-        JsonArray array = json.get("attachments").getAsJsonArray();
-        for (JsonElement elem : array) {
-            result.add(new JsonDocument(elem.getAsJsonObject()));
-        }
-        return result;
     }
 }

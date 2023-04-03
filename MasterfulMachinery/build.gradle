@@ -132,7 +132,7 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.19.4-45.0.40'
     implementation "io.ticticboom.mods:MasterfulUI:0.0.1"
-    implementation "io.ticticboom.mods:MasterfulConfiguration:0.0.1"
+    implementation "io.ticticboom.mods:MasterfulConfiguration:0.0.2-+"
     implementation "io.ticticboom.mods:MasterfulMultiBlocks:0.0.1"
     // Real mod deobf dependency examples - these get remapped to your current mappings
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api") // Adds JEI API as a compile dependency

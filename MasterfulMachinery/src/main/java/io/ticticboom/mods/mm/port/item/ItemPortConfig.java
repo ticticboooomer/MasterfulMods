@@ -2,7 +2,10 @@ package io.ticticboom.mods.mm.port.item;
 
 import io.ticticboom.mods.mconf.document.DocumentValidationError;
 import io.ticticboom.mods.mconf.document.IConfigSpecConsumer;
+import io.ticticboom.mods.mconf.document.ThrowingConfigSpecConsumer;
+import io.ticticboom.mods.mconf.parser.IParseableDocument;
 import io.ticticboom.mods.mconf.parser.IParseableDocumentSpec;
+import io.ticticboom.mods.mconf.registry.MasterfulRegistry;
 import io.ticticboom.mods.mconf.setup.document.ConfigDocumentType;
 import io.ticticboom.mods.mm.port.PortTypeConfigs;
 import io.ticticboom.mods.mm.port.base.IPortStorage;
@@ -12,12 +15,13 @@ import net.minecraft.world.level.Level;
 import java.util.List;
 
 public class ItemPortConfig extends ConfigDocumentType {
+    public static final MasterfulRegistry<Spec> REGISTRY = MasterfulRegistry.create();
     @Override
     public IConfigSpecConsumer createSpecConsumer() {
         return null;
     }
 
-    public static final class SpecConsumer extends PortTypeConfigs.SpecConsumer<Spec> {
+    public static final class SpecConsumer extends ThrowingConfigSpecConsumer<Spec> {
 
         @Override
         public Spec safeParse(IParseableDocumentSpec doc) {
@@ -32,8 +36,9 @@ public class ItemPortConfig extends ConfigDocumentType {
         }
 
         @Override
-        public PortTypeConfigs.PortTypeConfigHandler createHandler(Spec spec) {
-            return new PortTypeConfigHandler(spec);
+        public void safeConsume(Spec spec, IParseableDocument doc) {
+            REGISTRY.put(doc.getId(), spec);
+            PortTypeConfigs.HANDLERS.put(doc.getId(), new PortTypeConfigHandler(spec));
         }
     }
 
@@ -52,6 +57,6 @@ public class ItemPortConfig extends ConfigDocumentType {
     public record Spec(
             int slotsX,
             int slotsY
-    ) implements PortTypeConfigs.IPortTypeSpec {
+    ) {
     }
 }

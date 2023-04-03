@@ -3,7 +3,6 @@ package io.ticticboom.mods.mconf.parser.json;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import io.ticticboom.mods.mconf.parser.IParseableDocumentSpec;
-import io.ticticboom.mods.mconf.setup.MConfRegistries;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;

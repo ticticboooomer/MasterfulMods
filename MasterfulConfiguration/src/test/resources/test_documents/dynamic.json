@@ -13,7 +13,15 @@
         "type": "mmb:structure/key",
         "id": "mmb:stub"
       },
-      "displayName": "My displayname"
+      "displayName": {
+        "eval": { 
+          "type": "mconf:eval",
+          "id": "mm:my_scope_a",
+          "spec": {
+            "identifier": "theVarName",
+          }
+        }
+      }
     }
   }
 }

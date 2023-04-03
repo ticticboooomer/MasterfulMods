@@ -31,8 +31,7 @@ public class MultiBlockEntity extends BlockEntity {
             if (mb.get().isCoreBlock(level, getBlockPos())){
                 var m = mb.get();
                 multiBlocks.add(m);
-                m
-                        .initHandlers(getBlockPos());
+                m.initHandlers(getBlockPos());
             }
         }
     }

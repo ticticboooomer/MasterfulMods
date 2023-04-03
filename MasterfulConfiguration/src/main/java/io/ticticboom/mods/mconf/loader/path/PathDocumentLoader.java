@@ -1,9 +1,8 @@
 package io.ticticboom.mods.mconf.loader.path;
 
-import io.ticticboom.mods.mconf.loader.IDocumentLoader;
 import io.ticticboom.mods.mconf.parser.IParseableDocument;
-import io.ticticboom.mods.mconf.parser.IParseableDocumentSpec;
 import io.ticticboom.mods.mconf.setup.MConfRegistries;
+import io.ticticboom.mods.mconf.loader.IDocumentLoader;
 import lombok.SneakyThrows;
 
 import java.io.File;

@@ -6,7 +6,6 @@ import io.ticticboom.mods.mconf.loader.IDocumentLoader;
 import io.ticticboom.mods.mconf.parser.IParseableDocument;
 import io.ticticboom.mods.mconf.setup.MConfRegistries;
 
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 

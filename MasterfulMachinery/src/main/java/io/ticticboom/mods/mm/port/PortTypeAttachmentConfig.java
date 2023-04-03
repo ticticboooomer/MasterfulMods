@@ -8,25 +8,23 @@ import io.ticticboom.mods.mconf.parser.IParseableDocumentSpec;
 import io.ticticboom.mods.mconf.setup.document.ConfigDocumentType;
 import net.minecraft.resources.ResourceLocation;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
-public class PortBlockConfig extends ConfigDocumentType {
-
-    public static final Map<ResourceLocation, Spec> PORTS = new HashMap<>();
+public class PortTypeAttachmentConfig extends ConfigDocumentType {
     @Override
     public IConfigSpecConsumer createSpecConsumer() {
         return new SpecConsumer();
     }
 
     public static final class SpecConsumer extends ThrowingConfigSpecConsumer<Spec> {
-
         @Override
         public Spec safeParse(IParseableDocumentSpec doc) {
-            var name = doc.get("name").getSubDocument();
-            var port = doc.get("port").getSubDocument();
-            return new Spec(name, port);
+            Optional<ResourceLocation> gui = Optional.empty();
+            if (doc.has("gui")) {
+                gui = Optional.of(doc.get("gui").getSubDocument());
+            }
+            return new Spec(gui);
         }
 
         @Override
@@ -36,12 +34,12 @@ public class PortBlockConfig extends ConfigDocumentType {
 
         @Override
         public void safeConsume(Spec spec, IParseableDocument doc) {
-            PORTS.put(doc.getId(), spec);
+            PortTypeConfigs.ATTACHMENTS.put(doc.getId(), spec);
         }
     }
 
     public record Spec(
-            ResourceLocation name,
-            ResourceLocation port
-    ) {}
+            Optional<ResourceLocation> gui
+    ) {
+    }
 }
