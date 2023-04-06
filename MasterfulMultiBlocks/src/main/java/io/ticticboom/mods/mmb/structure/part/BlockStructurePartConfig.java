@@ -1,59 +1,59 @@
 package io.ticticboom.mods.mmb.structure.part;
 
-import io.ticticboom.mods.mconf.document.DocumentValidationError;
-import io.ticticboom.mods.mconf.document.IConfigSpecConsumer;
-import io.ticticboom.mods.mconf.parser.IParseableDocument;
-import io.ticticboom.mods.mconf.parser.IParseableDocumentSpec;
-import io.ticticboom.mods.mconf.setup.document.ConfigDocumentType;
+import com.google.gson.JsonObject;
+import com.mojang.datafixers.util.Pair;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.ticticboom.mods.mconf.codec.MCodecs;
+import io.ticticboom.mods.mconf.document.ConfigDocument;
+import io.ticticboom.mods.mconf.document.ConfigDocumentType;
+import io.ticticboom.mods.mconf.document.IConfigDocumentData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.List;
-import java.util.function.Function;
-
-public class BlockStructurePartConfig extends ConfigDocumentType {
+public class BlockStructurePartConfig extends ConfigDocumentType<BlockStructurePartConfig.Data, StructureParts.IPartHandlerFactory> {
     @Override
-    public IConfigSpecConsumer createSpecConsumer() {
-        return new SpecConsumer();
+    protected Codec<Data> createCodec() {
+        return RecordCodecBuilder.create(b ->
+                b.group(MCodecs.RESOURCE_LOCATION.fieldOf("block").forGetter(x -> x.block)).apply(b, Data::new));
     }
 
-    public static final class SpecConsumer extends StructureParts.SpecConsumer<Spec> {
+    @Override
+    public ConfigDocumentResult<Data, StructureParts.IPartHandlerFactory> createResult(ConfigDocument<Data> configDocument, JsonObject jsonObject) {
+        return new ConfigDocumentResult<>(new Pair<>(() -> new Factory(configDocument.data), configDocument));
+    }
 
-        @Override
-        public Spec safeParse(IParseableDocumentSpec value) {
-            return new Spec(new ResourceLocation(value.get("block").getString()));
+    public record Data(ResourceLocation block) implements StructureParts.IPartSpec, IConfigDocumentData {
+    }
+
+    public static final class Factory implements StructureParts.IPartHandlerFactory {
+
+        private final Data data;
+
+        public Factory(Data data) {
+
+            this.data = data;
         }
-
         @Override
-        public boolean safeValidate(Spec value, List<DocumentValidationError> errors) {
-            return true;
-        }
-
-        @Override
-        public StructureParts.IPartHandlerFactory createHandlerFactory(Spec value, IParseableDocument doc) {
-            return pos -> new SpecHandler(value, pos);
+        public StructureParts.SpecHandler create(BlockPos offset) {
+            return new Handler(data, offset);
         }
     }
 
-    public static final class SpecHandler extends StructureParts.SpecHandler {
+    public static final class Handler extends StructureParts.SpecHandler {
+        private final Data data;
 
-        public SpecHandler(StructureParts.IPartSpec spec, BlockPos offset) {
+        public Handler(Data spec, BlockPos offset) {
             super(spec, offset);
+            data = spec;
         }
 
         @Override
         public boolean verifyPlacement(Level level) {
-            Block block = level.getBlockState(offset).getBlock();
-            ResourceLocation key = ForgeRegistries.BLOCKS.getKey(block);
-            Spec blockSpec = (Spec)spec;
-            return key != null && key.toString().equals(blockSpec.block().toString());
+            var required = ForgeRegistries.BLOCKS.getValue(data.block());
+            return level.getBlockState(this.offset).is(required);
         }
-    }
-
-    public record Spec(ResourceLocation block) implements StructureParts.IPartSpec {
-
     }
 }

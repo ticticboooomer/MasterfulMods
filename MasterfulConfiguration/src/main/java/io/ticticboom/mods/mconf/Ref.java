@@ -18,4 +18,9 @@ public class Ref {
         public static final ResourceLocation TRANSLATED_COMPONENT = rl("component/translated");
         public static final ResourceLocation BLOCK_PROPERTIES = rl("block/properties");
     }
+
+    public static final class FunctionTypes {
+        public static final ResourceLocation LITERAL = rl("literal");
+        public static final ResourceLocation REFERENCE = rl("reference");
+    }
 }

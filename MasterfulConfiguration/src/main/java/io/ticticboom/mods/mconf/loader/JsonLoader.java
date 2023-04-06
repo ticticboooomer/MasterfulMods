@@ -25,6 +25,7 @@ public class JsonLoader implements IDocumentLoader {
     private void loadDocument(JsonObject json) {
         var type = new ResourceLocation(json.get("type").getAsString());
         var cdt = MConfRegistries.DOCUMENT_TYPES.get(type);
-        new DocumentParser<>(cdt).parse(json);
+        var doc = new DocumentParser<>(cdt).parse(json);
+        cdt.consume(doc.cast());
     }
 }

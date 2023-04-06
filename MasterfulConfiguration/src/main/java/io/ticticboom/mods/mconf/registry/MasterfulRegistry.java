@@ -3,10 +3,12 @@ package io.ticticboom.mods.mconf.registry;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class MasterfulRegistry<T> {
+    protected final List<BiConsumer<T, ResourceLocation>> registerCallbacks = new ArrayList<>();
     private final Map<ResourceLocation, T> registry = new HashMap<>();
-
     public static <T> MasterfulRegistry<T> create() {
         return new MasterfulRegistry<>();
     }
@@ -48,5 +50,9 @@ public class MasterfulRegistry<T> {
 
     public Collection<T> values() {
         return registry.values();
+    }
+    public MasterfulRegistry<T> withCallback(BiConsumer<T, ResourceLocation> callback) {
+        registerCallbacks.add(callback);
+        return this;
     }
 }

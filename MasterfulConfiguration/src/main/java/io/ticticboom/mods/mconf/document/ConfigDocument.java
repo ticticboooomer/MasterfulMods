@@ -13,4 +13,8 @@ public class ConfigDocument<DATA extends IConfigDocumentData> {
         this.id = id;
         this.data = data;
     }
+
+    public <T extends IConfigDocumentData> ConfigDocument<T> cast() {
+        return (ConfigDocument<T>) this;
+    }
 }

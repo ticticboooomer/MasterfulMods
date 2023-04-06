@@ -1,20 +1,26 @@
 {
   "type": "mmb:multiblock/fixed",
   "id": "test:daboi",
-  "spec": {
-    "displayName": "Daboi",
+  "data": {
+    "displayName": {
+      "type": "mconf:component/text",
+      "id": "test:daboi/displayname",
+      "data": {
+        "value": "Daboi"
+      }
+    },
     "coreBlock": {
       "type": "mmb:structure/coreblock/custom",
       "id": "test:daboi/coreblock",
-      "spec": {
+      "data": {
         "block": "temmb:fixed_multi_block"
       }
     },
     "pattern" : {
       "type": "mmb:structure/pattern",
       "id": "test:daboi/pattern",
-      "spec": {
-        "verticalDirection": "BOTTOM_FIRST",
+      "data": {
+        "yDirection": "BOTTOM_FIRST",
         "facingDirection": "NORTH_FIRST",
         "pattern": [
           [
@@ -26,14 +32,14 @@
     "key": {
       "type": "mmb:structure/key",
       "id": "test:daboi/key",
-      "spec": {
+      "data": {
         "keys": [
           {
             "character": "A",
             "part": {
               "type": "mmb:structure/part/block",
               "id": "test:daboi/key/a",
-              "spec": {
+              "data": {
                 "block": "minecraft:stone"
               }
             }

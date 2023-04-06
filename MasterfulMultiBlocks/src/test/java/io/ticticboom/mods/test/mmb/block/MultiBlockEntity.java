@@ -28,8 +28,8 @@ public class MultiBlockEntity extends BlockEntity {
     @Override
     public void onLoad() {
         for (Supplier<MultiBlockPartList> mb : MMBRegistries.MULTIBLOCKS.values()) {
-            if (mb.get().isCoreBlock(level, getBlockPos())){
-                var m = mb.get();
+            var m = mb.get();
+            if (m.isCoreBlock(level, getBlockPos())){
                 multiBlocks.add(m);
                 m.initHandlers(getBlockPos());
             }

@@ -18,10 +18,10 @@ public class MMBRegistries {
 
     public static final Map<ResourceLocation, Supplier<MultiBlockPartList>> MULTIBLOCKS = new HashMap<>();
     public static void registerConfigs() {
-        MConfRegistries.DOC_TYPES.put(Ref.DocTypes.STRUCTURE_KEY, new StructureKeyConfig());
-        MConfRegistries.DOC_TYPES.put(Ref.DocTypes.STRUCTURE_PATTERN, new StructurePatternConfig());
-        MConfRegistries.DOC_TYPES.put(Ref.DocTypes.FIXED_MULTIBLOCK, new FixedMultiBlockConfig());
-        MConfRegistries.DOC_TYPES.put(Ref.DocTypes.StructureParts.BLOCK, new BlockStructurePartConfig());
-        MConfRegistries.DOC_TYPES.put(Ref.DocTypes.CoreBlocks.CUSTOM, new CustomCoreBlockConfig());
+        MConfRegistries.DOCUMENT_TYPES.put(Ref.DocTypes.STRUCTURE_KEY, new StructureKeyConfig());
+        MConfRegistries.DOCUMENT_TYPES.put(Ref.DocTypes.STRUCTURE_PATTERN, new StructurePatternConfig());
+        MConfRegistries.DOCUMENT_TYPES.put(Ref.DocTypes.FIXED_MULTIBLOCK, new FixedMultiBlockConfig());
+        MConfRegistries.DOCUMENT_TYPES.put(Ref.DocTypes.StructureParts.BLOCK, new BlockStructurePartConfig());
+        MConfRegistries.DOCUMENT_TYPES.put(Ref.DocTypes.CoreBlocks.CUSTOM, new CustomCoreBlockConfig());
     }
 }
