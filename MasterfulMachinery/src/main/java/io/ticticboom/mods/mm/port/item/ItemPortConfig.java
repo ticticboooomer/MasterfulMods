@@ -1,48 +1,33 @@
 package io.ticticboom.mods.mm.port.item;
 
-import io.ticticboom.mods.mconf.document.DocumentValidationError;
-import io.ticticboom.mods.mconf.document.IConfigSpecConsumer;
-import io.ticticboom.mods.mconf.document.ThrowingConfigSpecConsumer;
-import io.ticticboom.mods.mconf.parser.IParseableDocument;
-import io.ticticboom.mods.mconf.parser.IParseableDocumentSpec;
-import io.ticticboom.mods.mconf.registry.MasterfulRegistry;
-import io.ticticboom.mods.mconf.setup.document.ConfigDocumentType;
+import com.google.gson.JsonObject;
+import com.mojang.datafixers.util.Pair;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.ticticboom.mods.mconf.document.ConfigDocument;
+import io.ticticboom.mods.mconf.document.ConfigDocumentType;
+import io.ticticboom.mods.mconf.document.IConfigDocumentData;
 import io.ticticboom.mods.mm.port.PortTypeConfigs;
+import io.ticticboom.mods.mm.port.base.IPortRecipeProcessor;
 import io.ticticboom.mods.mm.port.base.IPortStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 
-import java.util.List;
-
-public class ItemPortConfig extends ConfigDocumentType {
-    public static final MasterfulRegistry<Spec> REGISTRY = MasterfulRegistry.create();
+public class ItemPortConfig extends ConfigDocumentType<ItemPortConfig.Spec, ItemPortConfig.PortTypeConfigHandler> {
     @Override
-    public IConfigSpecConsumer createSpecConsumer() {
-        return null;
+    protected Codec<Spec> createCodec() {
+        return RecordCodecBuilder.create(b ->
+                b.group(Codec.INT.fieldOf("slotsX").forGetter(spec -> spec.slotsX))
+                        .and(Codec.INT.fieldOf("slotsY").forGetter(spec -> spec.slotsY))
+                        .apply(b, Spec::new));
     }
 
-    public static final class SpecConsumer extends ThrowingConfigSpecConsumer<Spec> {
-
-        @Override
-        public Spec safeParse(IParseableDocumentSpec doc) {
-            var x = doc.get("slotsX").getInteger();
-            var y = doc.get("slotsY").getInteger();
-            return new Spec(x, y);
-        }
-
-        @Override
-        public boolean safeValidate(Spec spec, List<DocumentValidationError> list) {
-            return true;
-        }
-
-        @Override
-        public void safeConsume(Spec spec, IParseableDocument doc) {
-            REGISTRY.put(doc.getId(), spec);
-            PortTypeConfigs.HANDLERS.put(doc.getId(), new PortTypeConfigHandler(spec));
-        }
+    @Override
+    public ConfigDocumentResult<Spec, PortTypeConfigHandler> createResult(ConfigDocument<Spec> configDocument, JsonObject jsonObject) {
+        return new ConfigDocumentResult<>(new Pair<>(() -> new PortTypeConfigHandler(configDocument.data), configDocument));
     }
 
-    public static final class PortTypeConfigHandler extends PortTypeConfigs.PortTypeConfigHandler {
+    public static final class PortTypeConfigHandler extends PortTypeConfigs.PortTypeConfigHandler<Spec> {
         private final Spec spec;
 
         public PortTypeConfigHandler(Spec spec) {
@@ -52,11 +37,16 @@ public class ItemPortConfig extends ConfigDocumentType {
         public IPortStorage createPortStorage(Level level, BlockPos pos) {
             return new ItemPortStorage(spec.slotsX(), spec.slotsY());
         }
+
+        @Override
+        public IPortRecipeProcessor createPortRecipeProcessor(Level level, BlockPos pos) {
+            return new IPortRecipeProcessor() {};
+        }
     }
 
     public record Spec(
             int slotsX,
             int slotsY
-    ) {
+    ) implements IConfigDocumentData {
     }
 }
