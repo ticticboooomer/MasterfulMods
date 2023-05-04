@@ -1,3 +1,4 @@
+
 plugins {
     id 'net.minecraftforge.gradle' version '5.1.+'
 }
@@ -41,7 +42,6 @@ minecraft {
             // "REGISTRIES": For firing of registry events.
             // "REGISTRYDUMP": For getting the contents of all registries.
             property 'forge.logging.markers', 'REGISTRIES'
-
 
             // Recommended logging level for the console
             // You can set various levels here.
@@ -124,6 +124,16 @@ repositories {
     //     dir 'libs'
     // }
     mavenLocal()
+    maven {
+        // location of the maven that hosts JEI files
+        name = "Progwml6 maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven {
+        // location of a maven mirror for JEI files, as a fallback
+        name = "ModMaven"
+        url = "https://modmaven.k-4u.nl"
+    }
 }
 
 dependencies {
@@ -131,9 +141,10 @@ dependencies {
     // that the dep is a ForgeGradle 'patcher' dependency, and its patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.19.4-45.0.40'
+
     compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
-    implementation "io.ticticboom.mods:MasterfulConfiguration:0.0.2-+"
+    implementation "io.ticticboom.mods:MasterfulConfiguration:0.0.3-+"
     implementation "io.ticticboom.mods:MasterfulMultiBlocks:0.0.1"
 
     // Real mod deobf dependency examples - these get remapped to your current mappings

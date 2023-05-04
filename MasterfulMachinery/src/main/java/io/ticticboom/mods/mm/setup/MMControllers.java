@@ -20,6 +20,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class MMControllers {
     public static final MasterfulRegistry<ConfigDocument<ControllerBlockConfig.Spec>> CONTROLLERS = MasterfulRegistry.create();
     public static final MasterfulRegistry<RegisteredController> REG_CONTROLLERS = MasterfulRegistry.create();
+    public static final MasterfulRegistry<RegisteredPort> REG_PORTS = MasterfulRegistry.create();
 
     public static void registerControllers() {
         for (ConfigDocument<ControllerBlockConfig.Spec> value : CONTROLLERS.values()) {
@@ -42,6 +43,7 @@ public class MMControllers {
         var handler = (PortTypeConfigs.PortTypeConfigHandler<?>) res.resultData().getFirst().get();
         PortTypeConfigs.HANDLERS.put(doc.id, handler);
         var reg = new RegisteredPort(doc, new Deferred<>(), new Deferred<>(), new Deferred<>());
+        REG_PORTS.put(doc.id, reg);
         reg.block().SetValue(MMRegistries.BLOCKS.register(doc.id.getPath(), () -> handler.registerBlock(doc.cast(), reg)));
         reg.blockEntity().SetValue(MMRegistries.BLOCK_ENTITY_TYPES.register(doc.id.getPath(), () -> handler.registerBlockEntity(doc.cast(), reg)));
         reg.item().SetValue(MMRegistries.ITEMS.register(doc.id.getPath(), () -> new BlockItem(reg.block().GetValue().get(), new Item.Properties())));

@@ -4,13 +4,18 @@ import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.ticticboom.mods.mconf.builtin.TextDocumentType;
+import io.ticticboom.mods.mconf.codec.MCodecs;
 import io.ticticboom.mods.mconf.document.ConfigDocument;
 import io.ticticboom.mods.mconf.document.ConfigDocumentType;
 import io.ticticboom.mods.mconf.document.IConfigDocumentData;
+import io.ticticboom.mods.mconf.setup.MConfRegistries;
 import io.ticticboom.mods.mm.port.PortTypeConfigs;
 import io.ticticboom.mods.mm.port.base.IPortRecipeProcessor;
 import io.ticticboom.mods.mm.port.base.IPortStorage;
+import io.ticticboom.mods.mm.setup.holder.RegisteredPort;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 
 public class ItemPortConfig extends ConfigDocumentType<ItemPortConfig.Spec, ItemPortConfig.PortTypeConfigHandler> {
@@ -19,6 +24,7 @@ public class ItemPortConfig extends ConfigDocumentType<ItemPortConfig.Spec, Item
         return RecordCodecBuilder.create(b ->
                 b.group(Codec.INT.fieldOf("slotsX").forGetter(spec -> spec.slotsX))
                         .and(Codec.INT.fieldOf("slotsY").forGetter(spec -> spec.slotsY))
+                        .and(MCodecs.SUB_DOCUMENT.fieldOf("name").forGetter(spec -> spec.name))
                         .apply(b, Spec::new));
     }
 
@@ -42,11 +48,20 @@ public class ItemPortConfig extends ConfigDocumentType<ItemPortConfig.Spec, Item
         public IPortRecipeProcessor createPortRecipeProcessor(Level level, BlockPos pos) {
             return new IPortRecipeProcessor() {};
         }
+
+        @Override
+        public String createName(ConfigDocument<Spec> doc, RegisteredPort port) {
+            var textType = MConfRegistries.DOCUMENT_TYPES.get(doc.data.name.type);
+            var res = textType.createResult(doc.data.name.cast(), new JsonObject());
+            var comp = ((Component) res.resultData().getFirst().get());
+            return comp.getString();
+        }
     }
 
     public record Spec(
             int slotsX,
-            int slotsY
+            int slotsY,
+            ConfigDocument<?> name
     ) implements IConfigDocumentData {
     }
 }

@@ -26,6 +26,7 @@ public class PortTypeConfigs {
     public static abstract class PortTypeConfigHandler<DATA extends IConfigDocumentData> {
         public abstract IPortStorage createPortStorage(Level level, BlockPos pos);
         public abstract IPortRecipeProcessor createPortRecipeProcessor(Level level, BlockPos pos);
+        public abstract String createName(ConfigDocument<DATA> doc, RegisteredPort port);
         public Block registerBlock(ConfigDocument<DATA> doc, RegisteredPort port) {
             return new PortBlock(port, this);
         }
@@ -33,7 +34,6 @@ public class PortTypeConfigs {
         public BlockEntityType<?> registerBlockEntity(ConfigDocument<DATA> doc, RegisteredPort port) {
             return BlockEntityType.Builder.of((pos, state) -> new PortBlockEntity(port.blockEntity().GetValue().get(), pos, state, doc, this), port.block().GetValue().get()).build(null);
         }
-
         public void tick(Level level, BlockPos pos, BlockEntity be) {
         }
 

@@ -12,6 +12,7 @@ import io.ticticboom.mods.mm.port.base.IPortRecipeProcessor;
 import io.ticticboom.mods.mm.port.base.IPortStorage;
 import io.ticticboom.mods.mm.port.item.ItemPortConfig;
 import io.ticticboom.mods.mm.port.item.ItemPortStorage;
+import io.ticticboom.mods.mm.setup.holder.RegisteredPort;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 
@@ -36,10 +37,14 @@ public class FluidPortConfig extends ConfigDocumentType<FluidPortConfig.Spec, Fl
         public IPortStorage createPortStorage(Level level, BlockPos pos) {
             return new ItemPortStorage(spec.capacity, spec.capacity);
         }
-
         @Override
         public IPortRecipeProcessor createPortRecipeProcessor(Level level, BlockPos pos) {
             return new IPortRecipeProcessor() {};
+        }
+
+        @Override
+        public String createName(ConfigDocument doc, RegisteredPort port) {
+            return "maybe";
         }
     }
 
