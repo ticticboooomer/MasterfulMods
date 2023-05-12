@@ -15,7 +15,6 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public class MMBRegistries {
-
     public static final Map<ResourceLocation, Supplier<MultiBlockPartList>> MULTIBLOCKS = new HashMap<>();
     public static void registerConfigs() {
         MConfRegistries.DOCUMENT_TYPES.put(Ref.DocTypes.STRUCTURE_KEY, new StructureKeyConfig());

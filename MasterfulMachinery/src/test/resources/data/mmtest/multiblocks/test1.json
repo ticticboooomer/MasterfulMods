@@ -1,0 +1,61 @@
+{
+  "type": "mmb:multiblock/fixed",
+  "id": "mmtest:multiblock_1",
+  "data": {
+    "displayName": {
+      "type": "mconf:component/text",
+      "id": "mmtest:multiblock_1/display_name",
+      "data": {
+        "value": "Multiblock 1"
+      }
+    },
+    "coreBlock": {
+      "type": "mmb:structure/coreblock/custom",
+      "id": "mmtest:multiblock_1/coreblock",
+      "data": {
+        "block": "mm:controller_a"
+      }
+    },
+    "pattern": {
+      "type": "mmb:structure/pattern",
+      "id": "mmb:multiblock_1/pattern",
+      "data": {
+        "yDirection": "TOP_FIRST",
+        "facingDirection": "NORTH_FIRST",
+        "pattern": [
+          [
+            "ACB"
+          ]
+        ]
+      }
+    },
+    "key": {
+      "type": "mmb:structure/key",
+      "id": "mmb:multiblock_1/key",
+      "data": {
+        "keys": [
+          {
+            "character": "A",
+            "part": {
+              "type": "mmb:structure/part/block",
+              "id": "mmb:multiblock_1/key/part/a",
+              "data": {
+                "block": "minecraft:glass"
+              }
+            }
+          },
+          {
+            "character": "B",
+            "part": {
+              "type": "mmb:structure/part/block",
+              "id": "mmb:multiblock_1/key/part/b",
+              "data": {
+                "block": "minecraft:grass_block"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

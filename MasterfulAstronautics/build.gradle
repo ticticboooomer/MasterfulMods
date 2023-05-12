@@ -146,7 +146,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.19.4-45.0.27'
+    minecraft 'net.minecraftforge:forge:1.19.4-45.0.57'
 }
 // Example for how to get properties into the manifest for reading at runtime.
 jar {
